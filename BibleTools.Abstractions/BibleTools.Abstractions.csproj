@@ -1,15 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\Konves.Osis\src\Konves.Osis\Konves.Osis.csproj" />
     <ProjectReference Include="..\Konves.Osis\src\Zefania\Zefania.csproj" />
-    <ProjectReference Include="..\BibleTools.Abstractions\BibleTools.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

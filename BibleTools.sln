@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibleTools.Manager", "BibleTools.Manager\BibleTools.Manager.csproj", "{12AB53FA-6808-474F-8C97-D13EAB18AA13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibleTools.GraphQLServer", "BibleTools.GraphQLServer\BibleTools.GraphQLServer.csproj", "{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibleTools.Abstractions", "BibleTools.Abstractions\BibleTools.Abstractions.csproj", "{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,29 @@ Global
 		{12AB53FA-6808-474F-8C97-D13EAB18AA13}.Release|x64.Build.0 = Release|Any CPU
 		{12AB53FA-6808-474F-8C97-D13EAB18AA13}.Release|x86.ActiveCfg = Release|Any CPU
 		{12AB53FA-6808-474F-8C97-D13EAB18AA13}.Release|x86.Build.0 = Release|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Debug|x64.Build.0 = Debug|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Debug|x86.Build.0 = Debug|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Release|x64.ActiveCfg = Release|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Release|x64.Build.0 = Release|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Release|x86.ActiveCfg = Release|Any CPU
+		{2A6C1341-964D-4CD7-AEC3-48F3E9A0D66B}.Release|x86.Build.0 = Release|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Debug|x64.Build.0 = Debug|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Debug|x86.Build.0 = Debug|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Release|x64.ActiveCfg = Release|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Release|x64.Build.0 = Release|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Release|x86.ActiveCfg = Release|Any CPU
+		{3FEAE1C5-FFC4-4AE6-90D7-0998104930CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

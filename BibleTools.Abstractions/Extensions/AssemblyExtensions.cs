@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace BibleTools.Manager
+namespace BibleTools.Extensions
 {
     public static class AssemblyExtensions
     {
-        public static string GetProjectPath(this Assembly assembly)
+        public static string? GetProjectPath(this Assembly assembly)
         {
 #if DEBUG
             var assemblyPath = Path.GetFullPath(new Uri(assembly.Location).AbsolutePath);
@@ -25,10 +25,14 @@ namespace BibleTools.Manager
 #endif
         }
 
-        public static string GetSolutionPath(this Assembly assembly)
+        public static string? GetSolutionPath(this Assembly assembly)
         {
 #if DEBUG
             var projectPath = assembly.GetProjectPath();
+
+            if (string.IsNullOrWhiteSpace(projectPath))
+                return null;
+
             var lastDirSepChar = projectPath.LastIndexOf(Path.DirectorySeparatorChar);
 
             return lastDirSepChar == -1 ? projectPath : projectPath.Remove(lastDirSepChar);
