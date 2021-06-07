@@ -1,3 +1,6 @@
 [submodule "bible"]
 	path = bible
 	url = git@github-private:Xmasjos/bible.git
+[submodule "Konves.Osis"]
+	path = Konves.Osis
+	url = git@github-private:Xmasjos/Konves.Osis.git
