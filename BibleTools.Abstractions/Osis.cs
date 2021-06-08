@@ -1,23 +1,24 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 using Konves.Osis;
 using Konves.Osis.ObjectModel;
 
 using BibleTools.Extensions;
-using System.Xml.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace BibleTools
 {
     public class Osis
     {
-        // private static 
         public static string? GetAbbreviation(osisCT osis)
         {
             workCT[] workItems;
@@ -98,6 +99,46 @@ namespace BibleTools
             return OsisSerializer.Deserialize(File.OpenRead(path));
         }
 
+        public static async Task<IDictionary<string, ICollection<(string Id, string Title)>>> GetBibleNamesByLanguage(string? language = null,
+            CancellationToken cancellationToken = default)
+        {
+            var bibleNamesByLanguage = new Dictionary<string, ICollection<(string, string)>>();
+
+            var indexXml = await GetIndexXml(cancellationToken);
+
+            if (string.IsNullOrWhiteSpace(language))
+            {
+                var languageNodes = indexXml.Root?.Descendants("language");
+
+                if (languageNodes?.Any() != true)
+                    return bibleNamesByLanguage;
+
+                foreach (var languageNode in languageNodes.Where(t => t.Attribute("id") != null))
+                {
+                    bibleNamesByLanguage[languageNode.Attribute("id")!.Value] = languageNode.Descendants("bible")
+                        .Where(t => t.Attribute("id") != null && t.Attribute("title") != null)
+                        .Select(t => (t.Attribute("id")!.Value, t.Attribute("title")!.Value))
+                        .ToList();
+                }
+            }
+            else
+            {
+                var languageNode = indexXml.Root?
+                    .Descendants("language")
+                    .FirstOrDefault(t => t.Attribute("id")?.Value == language);
+
+                if (languageNode == null)
+                    return bibleNamesByLanguage;
+
+                bibleNamesByLanguage[language] = languageNode.Descendants("bible")
+                    .Where(t => t.Attribute("id") != null && t.Attribute("title") != null)
+                    .Select(t => (t.Attribute("id")!.Value, t.Attribute("title")!.Value))
+                    .ToList();
+            }
+
+            return bibleNamesByLanguage;
+        }
+
         public static async Task<osisCT?> Get(string id, CancellationToken cancellationToken = default)
         {
             var language = await Osis.GetLanguageForId(id, cancellationToken);
@@ -108,12 +149,17 @@ namespace BibleTools
             return Get(language, id);
         }
 
-        public static async Task<string?> GetLanguageForId(string id, CancellationToken cancellationToken = default)
+        private static async Task<XDocument> GetIndexXml(CancellationToken cancellationToken = default)
         {
             var osisPath = GetRootPath();
             var indexPath = Path.Combine(osisPath, "index.xml");
 
-            var indexXml = await XDocument.LoadAsync(File.OpenRead(indexPath), LoadOptions.None, cancellationToken);
+            return await XDocument.LoadAsync(File.OpenRead(indexPath), LoadOptions.None, cancellationToken);
+        }
+
+        public static async Task<string?> GetLanguageForId(string id, CancellationToken cancellationToken = default)
+        {
+            var indexXml = await GetIndexXml(cancellationToken);
 
             return indexXml.Descendants("bible")
                 .Where(t => t.Attribute("id")?.Value == id)

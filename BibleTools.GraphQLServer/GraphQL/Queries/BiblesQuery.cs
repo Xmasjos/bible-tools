@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 using HotChocolate.Types;
 
+using BibleTools.GraphQLServer.GraphQL.Types;
+using BibleTools.GraphQLServer.Models;
+
 namespace BibleTools.GraphQLServer.GraphQL.Queries
 {
     public class BiblesQuery : QueryField
@@ -24,10 +27,10 @@ namespace BibleTools.GraphQLServer.GraphQL.Queries
             var bible = new Bible(
                 bibleType: BibleTypeEnum.Osis,
                 id: id,
-                title: Osis.GetTitle(osis) ?? throw new NullReferenceException("title"),
-                abbreviation: Osis.GetAbbreviation(osis) ?? id
+                title: Osis.GetTitle(osis) ?? throw new NullReferenceException("title")
             );
 
+            bible.Abbreviation = Osis.GetAbbreviation(osis) ?? id;
             bible.Language = CultureInfo.GetCultureInfo(language);
 
             return bible;
@@ -36,6 +39,7 @@ namespace BibleTools.GraphQLServer.GraphQL.Queries
         protected override void ConfigureQuery(IObjectTypeDescriptor descriptor)
         {
             descriptor.Field("bible")
+                .Type<BibleType>()
                 .Argument("type", argument => argument.Type<NonNullType<BibleTypeEnumType>>())
                 .Argument("id", argument => argument.Type<NonNullType<StringType>>())
                 .Resolve<Bible?>(async context =>
@@ -52,52 +56,5 @@ namespace BibleTools.GraphQLServer.GraphQL.Queries
                     }
                 });
         }
-    }
-
-    public class BibleType : ObjectType<Bible>
-    {
-        protected override void Configure(IObjectTypeDescriptor<Bible> descriptor)
-        {
-            descriptor.BindFieldsImplicitly();
-
-            descriptor.Field(t => t.Language)
-                .Name("language")
-                .Type<StringType>()
-                .Resolve<string?>(context => context.Parent<Bible>()?.Language?.EnglishName);
-        }
-    }
-
-    public class BibleTypeEnumType : EnumType<BibleTypeEnum>
-    {
-        protected override void Configure(IEnumTypeDescriptor<BibleTypeEnum> descriptor)
-        {
-            descriptor.Name("BibleType");
-
-            descriptor.BindValuesImplicitly();
-        }
-    }
-
-    public class Bible
-    {
-        public Bible(BibleTypeEnum bibleType, string id, string title, string abbreviation)
-        {
-            this.BibleType = bibleType;
-            this.Id = id;
-            this.Title = title;
-            this.Abbreviation = abbreviation;
-        }
-
-        public BibleTypeEnum BibleType { get; set; }
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public string Abbreviation { get; set; }
-
-        public CultureInfo? Language { get; set; }
-    }
-
-    public enum BibleTypeEnum
-    {
-        Osis,
-        // Zefania
     }
 }
